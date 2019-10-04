@@ -55,7 +55,7 @@ def playoffs():
 def playoffs_check():
     playoff_teams = []
     playoff_test = 0
-    while playoff_test < 10000:
+    while playoff_test < 1000:
         playoff_teams.extend(playoffs())
         playoff_test = playoff_test + 1
     return playoff_teams
