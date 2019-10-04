@@ -44,10 +44,6 @@ def playoffs():
                 playoff_list.append(i[0])
             else:
                 continue
-        if len(playoff_list) == 6:
-            break
-        else:
-            continue
     return playoff_list
 
 # Function to run the playoff selection algorithm 10,000 times
@@ -55,7 +51,7 @@ def playoffs():
 def playoffs_check():
     playoff_teams = []
     playoff_test = 0
-    while playoff_test < 10000:
+    while playoff_test < 100:
         playoff_teams.extend(playoffs())
         playoff_test = playoff_test + 1
     return playoff_teams
