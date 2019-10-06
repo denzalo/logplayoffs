@@ -26,7 +26,7 @@ def probability_check():
     while test_counter < 12:
          test_total_playoffs = test_total_playoffs + teams[test_counter][1]
          test_total_byes = test_total_byes + teams[test_counter][2]
-         test_counter = test_counter + 1
+         test_counter += 1
     print("Total Playoffs",test_total_playoffs)
     print("Total Byes",test_total_byes)
 # Run the line below to run the above test function
@@ -35,6 +35,7 @@ def probability_check():
 # Algorithm to pick the 6 playoff teams
 # Dice roll turned into a percentage and compared against each team's probability
 # Throw out any results that don't have exactly 6 teams
+
 def playoffs():
     while True:
         playoff_list = []
@@ -44,16 +45,20 @@ def playoffs():
                 playoff_list.append(i[0])
             else:
                 continue
+        if len(playoff_list) == 6:
+            break
+        else:
+            continue
     return playoff_list
 
-# Function to run the playoff selection algorithm 10,000 times
-# Add every 6-team scenario to one giant list with 60,000 items
+# Function to run the playoff selection algorithm 1,000 times
+# Add every 6-team scenario to one giant list with 6,000 items
 def playoffs_check():
     playoff_teams = []
     playoff_test = 0
-    while playoff_test < 100:
+    while playoff_test < 10000:
         playoff_teams.extend(playoffs())
-        playoff_test = playoff_test + 1
+        playoff_test += 1
     return playoff_teams
 
 # Run the algorithm test function
