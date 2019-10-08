@@ -1,68 +1,49 @@
-#Import libraries
+# Import libraries
 import random
-#import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
-#List is (team abbreviation, playoff odds, bye odds,.....)
-AA = ["AA",.33,.01]
-BG = ["BG",.99,.82]
-BSC = ["BSC",.68,.07]
-BT = ["BT",.95,.34]
-CHA = ["CHA",.97,.52]
-DDB = ["DDB",.11,.00]
-EJ = ["EJ",.48,.03]
-KCT = ["KCT",.82,.17]
-MTA = ["MTA",.00,.00]
-NSR = ["NSR",.01,.00]
-TDP = ["TDP",.57,.05]
-THR = ["THR",.09,.00]
-teams = [AA,BG,BSC,BT,CHA,DDB,EJ,KCT,MTA,NSR,TDP,THR]
+# Dictionary for each team and playoff probability
+teams = {
+    "AA": 0.33,
+    "BG": 0.99,
+    "BSC": 0.68,
+    "BT": 0.95,
+    "CHA": 0.97,
+    "DDB": 0.11,
+    "EJ": 0.48,
+    "KCT": 0.82,
+    "MTA": 0.01,
+    "NSR": 0.01,
+    "TDP": 0.57,
+    "THR": 0.09,
+}
 
-#This is a function I wrote to confirm my data entry above
-#Should output numbers close to 6 and 2. I'm OK with a little variance
-def probability_check():
-    test_total_playoffs = 0
-    test_total_byes = 0
-    test_counter = 0
-    while test_counter < 12:
-         test_total_playoffs = test_total_playoffs + teams[test_counter][1]
-         test_total_byes = test_total_byes + teams[test_counter][2]
-         test_counter += 1
-    print("Total Playoffs",test_total_playoffs)
-    print("Total Byes",test_total_byes)
-# Run the line below to run the above test function
-# probability_check()
+# Below function is just used for testing
+def test_data_entry():
+    test_data_totalplayoffs = 0
+    for i in teams:
+         test_data_totalplayoffs = test_data_totalplayoffs + teams[i]
+    print("Total Playoffs",test_data_totalplayoffs)
+# Run the line below to test validity of the data, should output 6
+# test_data_entry()
 
-# Algorithm to pick the 6 playoff teams
-# Dice roll turned into a percentage and compared against each team's probability
-# Throw out any results that don't have exactly 6 teams
+# Select the playoff teams
+def playoff_choices():
+    keys = list(teams.keys())
+    values = list(teams.values())
+    select = random.choices(keys,weights=values, k = 6)
+    return select
 
-def playoffs():
-    while True:
-        playoff_list = []
-        for i in teams:
-            diceroll = random.randint(1,100) / 100
-            if i[1] >= diceroll:
-                playoff_list.append(i[0])
-            else:
-                continue
-        if len(playoff_list) == 6:
-            break
-        else:
-            continue
-    return playoff_list
-
-# Function to run the playoff selection algorithm 1,000 times
-# Add every 6-team scenario to one giant list with 6,000 items
-def playoffs_check():
+# Below function is just used for testing
+def test_playoffs_check():
     playoff_teams = []
     playoff_test = 0
     while playoff_test < 10000:
-        playoff_teams.extend(playoffs())
+        playoff_teams.extend(playoff_choices())
         playoff_test += 1
     return playoff_teams
 
-# Run the algorithm test function
-# Count each result so you can compare to the original probabilities
-playoffs_list = playoffs_check()
+# Test count each result so you can compare to the original probabilities
+playoff_teams = test_playoffs_check()
 for x in teams:
-    print(x[0],playoffs_list.count(x[0]))
+    print(x,playoff_teams.count(x))
