@@ -41,6 +41,7 @@ def test_playoffs_check():
     while playoff_test < 10000:
         playoff_teams.extend(playoff_choices())
         playoff_test += 1
+
     return playoff_teams
 
 # Test count each result so you can compare to the original probabilities
