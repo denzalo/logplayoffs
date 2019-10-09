@@ -1,37 +1,57 @@
 # Import libraries
 import random
 # import matplotlib.pyplot as plt
+top2 = 0
+power = 0
+# List for each team and playoff probability
+AA = ["AA",0.33,top2,power]
+BG = ["BG",0.99,top2,power]
+BSC = ["BSC",0.68,top2,power]
+BT = ["BT",0.95,top2,power]
+CHA = ["CHA",0.97,top2,power]
+DDB = ["DDB",0.11,top2,power]
+EJ = ["EJ",0.48,top2,power]
+KCT = ["KCT",0.82,top2,power]
+MTA = ["MTA",0.01,top2,power]
+NSR = ["NSR",0.01,top2,power]
+TDP = ["TDP",0.57,top2,power]
+THR = ["THR",0.09,top2,power]
 
-# Dictionary for each team and playoff probability
-teams = {
-    "AA": 0.33,
-    "BG": 0.99,
-    "BSC": 0.68,
-    "BT": 0.95,
-    "CHA": 0.97,
-    "DDB": 0.11,
-    "EJ": 0.48,
-    "KCT": 0.82,
-    "MTA": 0.01,
-    "NSR": 0.01,
-    "TDP": 0.57,
-    "THR": 0.09,
-}
+teams = [
+    AA,
+    BG,
+    BSC,
+    BT,
+    CHA,
+    DDB,
+    EJ,
+    KCT,
+    MTA,
+    NSR,
+    TDP,
+    THR
+]
 
-# Below function is just used for testing
+# Below function is just used for data validation
 def test_data_entry():
+    test_counter = 0
     test_data_totalplayoffs = 0
-    for i in teams:
-         test_data_totalplayoffs = test_data_totalplayoffs + teams[i]
+    while test_counter < 12 :
+         test_data_totalplayoffs = test_data_totalplayoffs + teams[test_counter][1]
+         test_counter += 1
     print("Total Playoffs",test_data_totalplayoffs)
 # Run the line below to test validity of the data, should output 6
 # test_data_entry()
 
 # Select the playoff teams
 def playoff_choices():
-    keys = list(teams.keys())
-    values = list(teams.values())
-    select = random.choices(keys,weights=values, k = 6)
+    population = []
+    odds = []
+    for i in teams:
+        population.append(i[0])
+    for i in teams:
+        odds.append(i[1])
+    select = random.choices(population,weights=odds, k = 6)
     return select
 
 # Below function is just used for testing
@@ -41,10 +61,9 @@ def test_playoffs_check():
     while playoff_test < 10000:
         playoff_teams.extend(playoff_choices())
         playoff_test += 1
-
     return playoff_teams
 
 # Test count each result so you can compare to the original probabilities
 playoff_teams = test_playoffs_check()
-for x in teams:
-    print(x,playoff_teams.count(x))
+for i in teams:
+    print(i[0],playoff_teams.count(i[0]))
