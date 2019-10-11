@@ -45,7 +45,6 @@ def test_data_entry():
 # test_data_entry()
 
 # Select the playoff teams
-# Normalized odds / 6 - returns very skewed results 
 def playoff_choices():
     population = []
     odds = []
@@ -54,8 +53,15 @@ def playoff_choices():
     for team in teams:
         population.append(team[0])
     for team in teams:
-        odds.append(team[1]/6)
-    select = np.random.choice(population,6,replace=False,p=odds)
+        odds.append(team[1])
+    while i < 6:
+        working = random.choices(population,weights=odds,k=1)
+        working_string = str(working[0])
+        position = population.index(working_string)
+        select.append(working_string)
+        del population[position]
+        del odds[position]
+        i += 1
     # print(population)
     # print(odds)
     # print(select)
