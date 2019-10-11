@@ -1,5 +1,6 @@
 # Import libraries
 import random
+import numpy as np
 # import matplotlib.pyplot as plt
 top2 = 0
 power = 0
@@ -13,7 +14,7 @@ DDB = ["DDB",0.11,top2,power]
 EJ = ["EJ",0.48,top2,power]
 KCT = ["KCT",0.82,top2,power]
 MTA = ["MTA",0.01,top2,power]
-NSR = ["NSR",0.01,top2,power]
+NSR = ["NSR",0.00,top2,power]
 TDP = ["TDP",0.57,top2,power]
 THR = ["THR",0.09,top2,power]
 
@@ -44,26 +45,35 @@ def test_data_entry():
 # test_data_entry()
 
 # Select the playoff teams
+# Normalized odds / 6 - returns very skewed results 
 def playoff_choices():
     population = []
     odds = []
-    for i in teams:
-        population.append(i[0])
-    for i in teams:
-        odds.append(i[1])
-    select = random.choices(population,weights=odds, k = 6)
+    select = []
+    i = 0
+    for team in teams:
+        population.append(team[0])
+    for team in teams:
+        odds.append(team[1]/6)
+    select = np.random.choice(population,6,replace=False,p=odds)
+    # print(population)
+    # print(odds)
+    # print(select)
     return select
 
-# Below function is just used for testing
+# Below function is just used for selection validation
 def test_playoffs_check():
-    playoff_teams = []
-    playoff_test = 0
-    while playoff_test < 10000:
-        playoff_teams.extend(playoff_choices())
-        playoff_test += 1
-    return playoff_teams
+    test_playoff_teams = []
+    test_playoff_test = 0
+    while test_playoff_test < 10000:
+        test_playoff_teams.extend(playoff_choices())
+        test_playoff_test += 1
+    return test_playoff_teams
 
 # Test count each result so you can compare to the original probabilities
-playoff_teams = test_playoffs_check()
+count_playoff_teams = test_playoffs_check()
 for i in teams:
-    print(i[0],playoff_teams.count(i[0]))
+    print(i[0],count_playoff_teams.count(i[0]))
+
+#playoff_teams = playoff_choices()
+#print(playoff_teams)
