@@ -5,32 +5,32 @@ import numpy as np
 top2 = 0
 power = 0
 # List for each team and playoff probability
-AA = ["AA",0.33,top2,power]
-BG = ["BG",0.99,top2,power]
-BSC = ["BSC",0.68,top2,power]
-BT = ["BT",0.95,top2,power]
-CHA = ["CHA",0.97,top2,power]
-DDB = ["DDB",0.11,top2,power]
-EJ = ["EJ",0.48,top2,power]
-KCT = ["KCT",0.82,top2,power]
-MTA = ["MTA",0.01,top2,power]
-NSR = ["NSR",0.00,top2,power]
-TDP = ["TDP",0.57,top2,power]
-THR = ["THR",0.09,top2,power]
+AA = ["AA",0.1363,top2,3300]
+BG = ["BG",1.9602,top2,9900]
+BSC = ["BSC",0.3608,top2,6800]
+BT = ["BT",1.0845,top2,9500]
+CHA = ["CHA",1.3414,top2,9700]
+DDB = ["DDB",0.0420,top2,1100]
+EJ = ["EJ",0.2139,top2,4800]
+KCT = ["KCT",0.5529,top2,8200]
+MTA = ["MTA",0.0037,top2,100]
+NSR = ["NSR",0.0000,top2,0]
+TDP = ["TDP",0.2700,top2,5700]
+THR = ["THR",0.0343,top2,900]
 
 teams = [
-    AA,
     BG,
-    BSC,
-    BT,
     CHA,
-    DDB,
-    EJ,
+    BT,
     KCT,
-    MTA,
-    NSR,
+    BSC,
     TDP,
-    THR
+    EJ,
+    AA,
+    DDB,
+    THR,
+    MTA,
+    NSR
 ]
 
 # Below function is just used for data validation
@@ -45,7 +45,7 @@ def test_data_entry():
 # test_data_entry()
 
 # Select the playoff teams
-# Normalized odds / 6 - returns very skewed results 
+# Normalized odds / 6 - returns very skewed results
 def playoff_choices():
     population = []
     odds = []
@@ -65,7 +65,7 @@ def playoff_choices():
 def test_playoffs_check():
     test_playoff_teams = []
     test_playoff_test = 0
-    while test_playoff_test < 10000:
+    while test_playoff_test < 1000000:
         test_playoff_teams.extend(playoff_choices())
         test_playoff_test += 1
     return test_playoff_teams
@@ -73,7 +73,7 @@ def test_playoffs_check():
 # Test count each result so you can compare to the original probabilities
 count_playoff_teams = test_playoffs_check()
 for i in teams:
-    print(i[0],count_playoff_teams.count(i[0]))
+    print(i[0],count_playoff_teams.count(i[0]),"expected:",i[3]*100)
 
 #playoff_teams = playoff_choices()
 #print(playoff_teams)
